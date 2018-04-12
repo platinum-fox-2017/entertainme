@@ -36,6 +36,7 @@ module.exports = {
     }
   },
   update: async (req, res) => {
+    console.log('body',req.body)
     try {
       let data = await Movie.findByIdAndUpdate(
         req.params.id,
@@ -49,7 +50,8 @@ module.exports = {
       })
     } catch (err) {
       return res.status(400).json({
-          message: "failed to update data"
+          message: "failed to update data",
+          err
       })
     }
   },

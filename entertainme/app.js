@@ -8,7 +8,8 @@ var redis = require('redis');
 var client = redis.createClient();
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var movies = require('./routes/movies');
+var tvshows = require('./routes/tvshows');
 
 var app = express();
 
@@ -25,7 +26,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/movies', movies);
+app.use('/tvshows', tvshows);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -34,9 +36,9 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-client.on('ready', () => {
-  console.log('redis connected')
-})
+// client.on('ready', () => {
+//   console.log('redis connected')
+// })
 
 // error handler
 app.use(function(err, req, res, next) {
