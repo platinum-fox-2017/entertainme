@@ -16,8 +16,8 @@ module.exports = {
         let cache = req.headers.cache
         if(!cache) { cache = []; };
         cache.push(tv);
-        client.set('tv', JSON.stringify(cache));
-        client.expire('tv', 500);
+        // client.set('tv', JSON.stringify(cache));
+        // client.expire('tv', 500);
         return res.status(201).send(tv);
     } catch(err) {
       res.status(500).send(err);
@@ -29,6 +29,7 @@ module.exports = {
     if(cache) { return res.status(200).send(cache); };
     try {
       const tv = await Tv.find()
+      // client.set('tv', JSON.stringify(movie));
       return res.status(200).send(tv)
     } catch(err) {
       return res.status(500).send(err)

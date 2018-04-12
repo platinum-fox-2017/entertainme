@@ -16,7 +16,7 @@ module.exports = {
         let cache = req.headers.cache
         if(!cache) { cache = []; };
         cache.push(movie);
-        client.set('movies', JSON.stringify(cache));
+        // client.set('movies', JSON.stringify(cache));
         return res.status(201).send(movie);
     } catch(err) {
       res.status(500).send(err);
