@@ -1,5 +1,5 @@
 const routes = require('express').Router()
-const { getAllData, addMovie } = require('../controllers/entertainme.controller')
+const { getAllData, addMovie, addTvShow } = require('../controllers/entertainme.controller')
 const { cache } = require('../middlewares/cache')
 
 // routes.get('/', (req, res) => {
@@ -10,5 +10,6 @@ const { cache } = require('../middlewares/cache')
 
 routes.get('/', cache, getAllData)
 routes.post('/movie', addMovie)
+routes.post('/tv', addTvShow)
 
 module.exports = routes

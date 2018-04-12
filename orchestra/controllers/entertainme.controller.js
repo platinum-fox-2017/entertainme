@@ -44,7 +44,33 @@ module.exports = {
         console.log(reply)
       })
     } catch (err) {
-      console.log(err)
+      return res.status(500).json({
+        message: err.response
+      })
+    }
+  },
+
+  addTvShow: async function (req, res) {
+    try {
+      let newShow = {
+        title: req.body.title,
+        overview: req.body.overview,
+        poster_path: req.body.poster_path,
+        popularity: req.body.popularity,
+        status: req.body.status
+      }
+      let insert = await axios.post('http://localhost:3002/tv', newShow)
+      res.status(201).json({
+        message: 'new show added',
+        show: insert.data
+      })
+      client.del('entertainme', function(err, reply) {
+        console.log(reply)
+      })
+    } catch (err) {
+      return res.status(500).json({
+        message: err.response
+      })
     }
   }
 }
