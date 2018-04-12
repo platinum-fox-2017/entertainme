@@ -46,18 +46,13 @@ const update = async function (req,res) {
 const destroy =  async function (req,res) {
 
   const id = req.params.id;
-  try {
-    const data = await Movie.findOneAndRemove({_id:id}, req.body) 
+   Movie.findOneAndRemove({_id:id}, function(err, data) {
+    err && res.status(500).json({info: err})
     res.status(200).json({
       info: "Success Delete Movie",
       data
     })
-  } catch (e) {
-    /* handle error */
-info: e
-    res.status(500).json({
-    })
-  } 
+  }) 
 }
 
 module.exports = {
