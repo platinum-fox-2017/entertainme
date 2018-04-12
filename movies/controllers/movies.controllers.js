@@ -1,9 +1,10 @@
 const Movie = require('../models/movie')
 
 const getAllMovies = (req,res) => {
-  Movie.find({}, (err, datas) => {
+  Movie.find({}, (err, data) => {
     res.status(200).json({
-      datas
+      info: 'Movies Found Successfully',
+      data
     })
   })
 }
@@ -13,7 +14,8 @@ const addMovies = (req,res) => {
     title,
     popularity,
     tag,
-    poster_path
+    poster_path,
+    overview
   } = req.body
 
   const movie = new Movie()
@@ -22,6 +24,7 @@ const addMovies = (req,res) => {
   movie.popularity = popularity
   movie.tag = tag
   movie.poster_path = poster_path
+  movie.overview = overview
   movie.save()
     .then((data) => {
       res.status(201).json({
