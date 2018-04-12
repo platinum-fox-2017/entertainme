@@ -7,6 +7,7 @@
     title:   String,
     popularity: Number,
     tag: Array,
+    status: String
   });
 
 module.exports = mongoose.model('Movie', movieSchema)
