@@ -57,5 +57,51 @@ module.exports = {
           data: {}
         })
       }       
+    },
+
+    update : async (req,res) => {        
+      try {
+        const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, {
+          title: req.body.title,
+          overview: req.body.overview,
+          poster_path: req.body.poster_path,
+          popularity: req.body.popularity,
+          tag: req.body.tag,
+          status : req.body.status
+        }, {new : true})
+
+        if (updatedMovie) {
+          res.status(200).json({
+            message : `Update movie success`,
+            data    : updatedMovie
+          })
+        } else {
+          res.status(500).json({
+            message : `Failed to update movie ${err}`,
+            data    : {}
+          })          
+        }
+      } catch (err) {
+        res.status(500).json({
+          message : `Failed to update movie ${err}`,
+          data    : {}
+        })
+      }
+    },
+
+    delete : async (req,res) => {
+      const deletedMovie = await Movie.findByIdAndRemove(req.params.id)
+
+      if (deletedMovie) {
+        res.status(200).json({
+          message : `Delete movie success !`,
+          data    : deletedMovie
+        })
+      } else {
+        res.status(500).json({
+          message : `Error deleting movie ! ${err}`,
+          data : {}
+        })
+      }
     }
 }
