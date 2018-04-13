@@ -9,14 +9,14 @@ const getAllMovie = async (req, res) => {
   } else {
     res.status(500).json('Error')
   }
-  
 }
 
 const addMovie = async (req, res) => {
   const data = req.body
   const addMov = await axios.post('http://localhost:3001/add', data)
   if (addMov) {
-    res.send(addMov.data)
+    setMovieCache(addMov.data.newData)
+    res.send(addMov.data.result)
   } else {
     res.status(500).json('Error om')
   }
@@ -39,7 +39,17 @@ const inputTag = async (req, res) => {
   }
   const inputting = await axios.put('http://localhost:3001/inputtag', obj)
   if (inputting) {
-    console.log(inputting)
+    setMovieCache(addMov.data.newData)
+    res.status(200).json(inputting.data.result)
+  }
+}
+
+const deleteMov = async (req, res) => {
+  const movieid = req.params.movieid
+  const deleting = await axios.delete(`http://localhost:3001/deletmov/${movieid}`)
+  if (deleting) {
+    setMovieCache(deleting.data.newData)
+    res.status(200).json(deleting.data.result)
   }
 }
 
@@ -47,5 +57,6 @@ module.exports = {
   getAllMovie,
   addMovie,
   addTagMovie,
-  inputTag
+  inputTag,
+  deleteMov
 }
