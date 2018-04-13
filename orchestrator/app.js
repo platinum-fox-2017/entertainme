@@ -7,6 +7,7 @@ const entertainme = require('./routes/entertainme');
 const movie = require('./routes/movie');
 const tv = require('./routes/tv');
 
+const cache = require('./middleware/redis');
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(cors());
 
-app.use('/entertainme', entertainme);
+app.use('/entertainme',cache,entertainme);
 app.use('/movie', movie);
 app.use('/tv', tv);
 

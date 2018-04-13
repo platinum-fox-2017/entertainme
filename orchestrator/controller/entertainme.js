@@ -1,17 +1,17 @@
 const axios = require('axios');
+const setCache = require('../helper/setCache')
 
 module.exports = {
-
   showMovies: async(req,res)=> {
     try{
       const movies = await axios.get('http://localhost:3001/movie');
-        res.status(201).send({
+        res.status(201).json({
           message: 'show all movies success',
-          data: movies
+          data: movies.data
         })
     }catch(err){
-      res.status(500).send({
-        message: 'errorr show all movies'
+      res.status(500).json({
+        message: `errorr show all movies ${err}`
       })
     }
   },
@@ -26,10 +26,11 @@ module.exports = {
       })
       res.status(200).json({
         message: 'success add movies',
-        data: movie
+        data: movie.data
       })
+      showMovieAndTV(req,res)
     }catch(err){
-      res.status(500).send({
+      res.status(500).json({
         message: `error create movie ${err}`
       })
     }
@@ -37,12 +38,12 @@ module.exports = {
   showTv: async(req,res)=> {
     try{
       const tv = await axios.get('http://localhost:3002/tv')
-        res.status(201).send({
+        res.status(201).json({
           message: 'show all tv success',
-          data: tv
+          data: tv.data
         })
     }catch(err){
-      res.status(500).send({
+      res.status(500).json({
         message: 'errorr show all tv'
       })
     }
@@ -58,10 +59,11 @@ module.exports = {
       })
       res.status(200).json({
         message: 'success add tv',
-        data: tv
+        data: tv.data
       })
+      showMovieAndTV(req,res)      
     }catch(err){
-      res.status(500).send({
+      res.status(500).json({
         message: `error create tv ${err}`
       })
     }
@@ -74,7 +76,7 @@ module.exports = {
         movies: movies.data,
         tv: tv.data
       }
-      setCache(result);
+      setCache(result)
       res.status(200).json({
         message: 'success show data movies and tv',
         data: result
