@@ -7,8 +7,9 @@ module.exports = {
       let series = await new Series(req.body).save();
 
       if(req.headers.cache) {
-        req.headers.cache.push(series);
-        client.set('series', JSON.stringify(req.headers.cache));
+        let newCache = JSON.parse(req.headers.cache);
+        newCache.push(series);
+        client.set('series', JSON.stringify(newCache));
       }
       
       return res.status(201).send({ info: 'series add successfully' });
@@ -47,11 +48,11 @@ module.exports = {
       series.set(req.body).save();
 
       if(req.headers.cache) {
-        let index = req.headers.cache.findIndex(mov => mov._id == req.params.id);
-        req.headers.cache.splice(index, 1, series);
-        client.set('series', JSON.stringify(req.headers.cache));
+        let newCache = JSON.parse(req.headers.cache);
+        let index = newCache.findIndex(mov => mov._id == req.params.id);
+        newCache.splice(index, 1, series);
+        client.set('series', JSON.stringify(newCache));
       }
-
 
       return res.status(201).send({ info: 'series update successfully' });
     } catch (err) {
@@ -64,9 +65,10 @@ module.exports = {
       let series = await Series.findByIdAndRemove(req.params.id);
 
       if(req.headers.cache) {
-        let index = req.headers.cache.findIndex(mov => mov._id == req.params.id);
-        req.headers.cache.splice(index, 1);
-        client.set('series', JSON.stringify(req.headers.cache));
+        let newCache = JSON.parse(req.headers.cache);
+        let index = newCache.findIndex(mov => mov._id == req.params.id);
+        newCache.splice(index, 1);
+        client.set('series', JSON.stringify(newCache));
       }
 
       return res.status(201).send({ info: 'series delete successfully' });

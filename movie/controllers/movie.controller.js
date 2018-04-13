@@ -7,8 +7,9 @@ module.exports = {
       let movie = await new Movie(req.body).save();
 
       if(req.headers.cache) {
-        req.headers.cache.push(movie);
-        client.set('movies', JSON.stringify(req.headers.cache));
+        let newCache = JSON.parse(req.headers.cache);
+        newCache.push(movie);
+        client.set('movies', JSON.stringify(newCache));
       }
       
       return res.status(201).send({ info: 'movie add successfully' });
@@ -18,24 +19,17 @@ module.exports = {
   },
 
   loadAll: async(req, res) => {
-    if (req.headers.cache)
+    try {
+      let movies = await Movie.find();
+
+      client.set('movies', JSON.stringify(movies));
+
       return res.status(200).send({
         info: 'movies found successfully',
-        data: req.headers.cache
+        data: movies
       });
-    else {
-      try {
-        let movies = await Movie.find();
-  
-        client.set('movies', JSON.stringify(movies));
-  
-        return res.status(200).send({
-          info: 'movies found successfully',
-          data: movies
-        });
-      } catch (err) {
-        return res.status(500).send({ info: err.message });
-      }
+    } catch (err) {
+      return res.status(500).send({ info: err.message });
     }
   },
 
@@ -43,14 +37,13 @@ module.exports = {
     try {
       let movie = await Movie.findById(req.params.id);
       movie.set(req.body).save();
-
+      
       if(req.headers.cache) {
-        let index = req.headers.cache.findIndex(mov => mov._id == req.params.id);
-        req.headers.cache.splice(index, 1, movie);
-        client.set('movies', JSON.stringify(req.headers.cache));
+        let newCache = JSON.parse(req.headers.cache)
+        let index = newCache.findIndex(mov => mov._id == req.params.id);
+        newCache.splice(index, 1, movie);
+        client.set('movies', JSON.stringify(newCache));
       }
-
-
       return res.status(201).send({ info: 'movie update successfully' });
     } catch (err) {
       return res.status(500).send({ info: err.message });
@@ -62,9 +55,10 @@ module.exports = {
       let movie = await Movie.findByIdAndRemove(req.params.id);
 
       if(req.headers.cache) {
-        let index = req.headers.cache.findIndex(mov => mov._id == req.params.id);
-        req.headers.cache.splice(index, 1);
-        client.set('movies', JSON.stringify(req.headers.cache));
+        let newCache = JSON.parse(req.headers.cache)
+        let index = newCache.findIndex(mov => mov._id == req.params.id);
+        newCache.splice(index, 1);
+        client.set('movies', JSON.stringify(newCache));
       }
 
       return res.status(201).send({ info: 'movie delete successfully' });
