@@ -1,0 +1,4 @@
+services/movies/node_modules/
+services/tv/node_modules/
+node_modules/
+.DS_Store
