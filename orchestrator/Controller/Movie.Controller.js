@@ -4,6 +4,7 @@ const { setMovieCache } = require('../helpers/redis')
 const getAllMovie = async (req, res) => {
   const moviesData = await axios.get('http://localhost:3001/')
   if (moviesData) {
+    console.log(moviesData)
     setMovieCache(moviesData.data)
     res.status(200).json(moviesData.data)
   } else {
