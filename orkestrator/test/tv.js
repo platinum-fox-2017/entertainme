@@ -57,7 +57,6 @@ describe('Tv Crud', function() {
          
         client.get('entertain', function(err, reply) {
           let entertain = JSON.parse(reply)
-          console.log(entertain.series.data)
           let updateTv = entertain.series.data.filter( ent =>{
            return  ent._id == tvId
           })
