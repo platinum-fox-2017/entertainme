@@ -2,22 +2,20 @@ require('dotenv').config()
 const express       = require('express')
 const bodyParser    = require('body-parser')
 const cors          = require('cors')
-// const mongoose      = require('mongoose')
+const redis         = require('redis')
+const clientRedis   = redis.createClient()
+const cacheRedis    = require('./middlewares/chache')
 
 const app = express()
 
-// mongoose.connection.openUri('mongodb://localhost:27017/entertainme')
-// mongoose.Promise = global.Promise
-// mongoose.connection.once('open', () => {
-//   console.log('mongoose-entertainme connection success')
-// }).on('error', (error) => {
-//   console.error('connection error', error)
-// })
+clientRedis.on('ready', (err) => {
+  err ? console.error('redis client connection error : ', err) : console.log('redis client connection success')
+})
 
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use('/api/entertainme', require('./routes/entertains'))
+app.use('/api/entertainme', cacheRedis, require('./routes/entertains'))
 
 module.exports = app
