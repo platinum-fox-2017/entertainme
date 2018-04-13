@@ -4,8 +4,11 @@ const router = express.Router();
 // controller
 const DataController = require('../controllers/DataController')
 
+// middleware
+const { checkCache } = require('../middleware/redisCache')
+
 // route: /entertain
-router.get('/me', DataController.getData)
+router.get('/me', checkCache, DataController.getData)
 
 // movies management
 router.post('/movies/add', DataController.addMovies)

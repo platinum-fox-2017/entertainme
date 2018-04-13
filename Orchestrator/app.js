@@ -15,8 +15,8 @@ const dataEntertain = require('./routes/dataEntertain');
 const app = express();
 
 // redis
-client.on('ready', () => {
-  console.log('Redis is Ready');
+client.on('connect', () => {
+  console.log('Redis is Connected');
 })
 client.on('error', (err) => {
   console.log('Redis Error, ', err);
