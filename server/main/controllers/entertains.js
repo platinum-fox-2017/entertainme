@@ -1,4 +1,7 @@
 const axios       = require('axios')
+const redis       = require('redis')
+const clientRedis = redis.createClient()
+
 const urlMovie    = 'http://localhost:3001/api/movies'
 const urlTvseries = 'http://localhost:3002/api/tvseries'
 
@@ -13,6 +16,11 @@ module.exports = {
         series: series.data
       }
       // console.log('readAllData', datas)
+      clientRedis.set('entertainme', JSON.stringify({
+        message: 'success to get all data movies and tv-series',
+        data
+      }), 'EX', 300)
+
       res.status(200).json({
         message: 'success to get all data movies and tv-series',
         data
@@ -25,6 +33,7 @@ module.exports = {
   readMoviesData: async (req, res) => {
     try {
       const movies = await axios.get(urlMovie)
+      clientRedis.set('entertainme', JSON.stringify(movies.data), 'EX', 300)
       res.status(200).json(movies.data)
     } catch (err) {
       res.status(500).json('an error occured while getting movie data: ', err)
@@ -34,6 +43,7 @@ module.exports = {
   readTvseriesData: async (req, res) => {
     try {
       const series = await axios.get(urlTvseries)
+      clientRedis.set('entertainme', JSON.stringify(series.data), 'EX', 300)
       res.status(200).json(series.data)
     } catch (err) {
       res.status(500).json('an error occured while getting tv-series data: ', err)
@@ -50,11 +60,18 @@ module.exports = {
         tag         : req.body.tag,
         status      : req.body.status
       })
-      res.status(200).json({
-        message : 'success insert record in movies',
-        data: movie.data
-      })
-      readAllData(req, res)
+
+      // clientRedis.get('entertainme', function(err, reply) {
+      //   if (reply) {
+      //     let entertainme = JSON.parse(reply)
+      //     entertainme.movies.data.push(movie.data)
+      //     clientRedis.set('entertainme', JSON.stringify(entertainme), 'EX', 300)
+      //   } else {
+      //     clientRedis.set('entertainme', JSON.stringify(movie.data), 'EX', 300)
+      //   }
+      // })
+
+      res.status(200).json(movie.data)
     } catch (err) {
       res.status(500).json('an error occured while adding movie data: ', err)
     }
@@ -70,10 +87,7 @@ module.exports = {
         tag         : req.body.tag,
         status      : req.body.status
       })
-      res.status(200).json({
-        message : 'success insert record in tv-series',
-        data: series.data
-      })
+      res.status(200).json(series.data)
       readAllData(req, res)
     } catch (err) {
       res.status(500).json('an error occured while adding tv-series data: ', err)
@@ -90,10 +104,7 @@ module.exports = {
         tag         : req.body.tag,
         status      : req.body.status
       })
-      res.status(200).json({
-        message : 'success update record in movies',
-        data: movie.data
-      })
+      res.status(200).json(movie.data)
       readAllData(req, res)
     } catch (err) {
       res.status(500).json('an error occured while update movie data: ', err)
@@ -110,10 +121,7 @@ module.exports = {
         tag         : req.body.tag,
         status      : req.body.status
       })
-      res.status(200).json({
-        message : 'success update record in tv-series',
-        data: movie.data
-      })
+      res.status(200).json(movie.data)
       readAllData(req, res)
     } catch (err) {
       res.status(500).json('an error occured while update tv-series data: ', err)

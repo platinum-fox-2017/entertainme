@@ -50,9 +50,9 @@ And this is the benchmarking table to know how the app run.
 
 | Method	| Experiment 		| Without Redis (ms) 	| With Redis (ms) |
 | ------- | ------------- | ------------------- |-----------------|
-| GET		 	| 1 	 					| 				72.6ms 			| 		24.4ms	 		|
-| GET		 	| 2 	 					| 				12.5ms 			| 		11.7ms	 		|
-| GET		 	| 3 	 					| 				26.1ms 			| 		13.9ms	 		|
+| GET		 	| 1 	 					| 				72.6ms 			| 		48.4ms	 		|
+| GET		 	| 2 	 					| 				12.5ms 			| 		6.14ms	 		|
+| GET		 	| 3 	 					| 				26.1ms 			| 		3.53ms	 		|
 | POST	 	| 1 	 					| 				20.1ms 			| 		13.7ms	 		|
 | POST	 	| 2 	 					| 				28.6ms 			| 		10.9ms	 		|
 | POST	 	| 3 	 					| 				10.4ms 			| 		19.0ms	 		|
