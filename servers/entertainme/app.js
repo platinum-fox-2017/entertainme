@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 
-var orchestrator = require('./routes/orchestrator');
+var entertainme = require('./routes/entertainme');
 var caching = require('./middleware/caching')
 
 var app = express();
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/orchestrator', caching, orchestrator);
+app.use('/entertainme', caching, entertainme);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,6 +43,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000, () => console.log('Orchestrator Server on port 3000 '))
+app.listen(3000, () => console.log('Entertainme Server on port 3000 '))
 
 module.exports = app;

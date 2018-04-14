@@ -12,7 +12,7 @@ var app = express();
 
 const mongoose = require('mongoose')
 mongoose.connect
-('mongodb://cbudiman:cbudiman123@ds161823.mlab.com:61823/tvseries', err => {
+('mongodb://cbudiman2:cbudiman123@ds161823.mlab.com:61823/tvseries', err => {
   if(!err) {
     console.log('tvSeries mongoose connected');
   } else {

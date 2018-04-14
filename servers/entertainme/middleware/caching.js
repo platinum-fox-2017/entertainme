@@ -6,14 +6,10 @@ client.on('connect', () => {
 })
 
 const caching = (req, res, next) => {
-  client.get('orchestrator-data', (error, reply) => {
-    if(error) {
-      console.log(error)
-    } else if (!reply) {
-      next()
-    } else {
-      res.status(200).json(JSON.parse(reply))
-    }
+  client.get('entertainme_data', (error, reply) => {
+    console.log('>> 00 middleware/ caching/')
+
+    reply ? res.status(200).json(JSON.parse(reply)) : next()
   })
 }
 
