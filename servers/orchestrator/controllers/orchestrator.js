@@ -15,23 +15,178 @@ const getMoviesAndTvSeries = async(req, res) => {
       tvSeries: tvSeries.data,
     }
 
-    console.log('orchestrator/ controller/ result : ', result)
-
     //without Redis
-    // res.status(200).json({
-    //   result
-    // })
+    res.status(200).json({
+      result
+    })
 
     //With Redis
-    client.set('Orchestrator data', JSON.stringify(result))
-    res.status(200).json(result)
+    // client.set('Orchestrator data', JSON.stringify(result))
+    // client.expire('Orchestrator data', 800)
+    // res.status(200).json(result)
   } catch (error) {
     res.status(500).json({
-      info: 'Error while fetching data'
+      message: error.message
+    })
+  }
+}
+
+const createMovie = async(req, res) => {
+  try { 
+    let addMovie = await axios.post(moviesUrl, {
+      title: req.body.title,
+      overview: req.body.overview,
+      poster_path: req.body.poster_path,
+      popularity: req.body.popularity,
+      status: req.body.status
+    })
+
+    res.status(201).json({
+      message: '1 new movie added successfully',
+      movie: addMovie.data
+    })
+
+  } catch (error) { 
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+const getMovies = async(req, res) => {
+  try { 
+    const movies = await axios.get(moviesUrl)
+    //without Redis
+    res.status(200).json({
+      movies: movies.data
+    })
+
+    //With Redis
+    // client.set('Orchestrator data', JSON.stringify(result))
+    // client.expire('Orchestrator data', 800)
+    // res.status(200).json(movies)
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+const updateMovie = async (req, res) => {
+  try {
+    let movieUpdated = await axios.put(`${moviesUrl}/${req.params.id}`,{
+      title: req.body.title,
+      overview: req.body.overview,
+      poster_path: req.body.poster_path,
+      popularity: req.body.popularity,
+      status: req.body.status      
+    }) 
+
+    res.status(200).json({
+      info: 'Update Movie Success',
+      data: movieUpdated.data
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+const deleteMovie = async (req, res) => {
+  try {
+    await axios.delete(`${moviesUrl}/${req.params.id}`) 
+
+    res.status(200).json({
+      info: 'Delete Movie Success',
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+const createTvSeries = async(req, res) => {
+  try { 
+    let addTvSeries = await axios.post(tvSeriesUrl, {
+      title: req.body.title,
+      overview: req.body.overview,
+      poster_path: req.body.poster_path,
+      popularity: req.body.popularity,
+      status: req.body.status
+    })
+
+    res.status(201).json({
+      message: '1 new Tv Series added successfully',
+      tvSeries: addTvSeries.data
+    })
+
+  } catch (error) { 
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+const getTvSeries = async(req, res) => {
+  try { 
+    const tvSeries = await axios.get(tvSeriesUrl)
+    res.status(200).json({
+      tvSeries: tvSeries.data
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+const updateTvSeries = async (req, res) => {
+  try {
+    let tvSeriesUpdated = await axios.put(`${tvSeriesUrl}/${req.params.id}`,{
+      title: req.body.title,
+      overview: req.body.overview,
+      poster_path: req.body.poster_path,
+      popularity: req.body.popularity,
+      status: req.body.status      
+    }) 
+
+    res.status(200).json({
+      info: 'Update Tv Series Success',
+      data: tvSeriesUpdated.data
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+const deleteTvSeries = async (req, res) => {
+  try {
+    await axios.delete(`${tvSeriesUrl}/${req.params.id}`) 
+
+    res.status(200).json({
+      info: 'Delete Tv Series Success',
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
     })
   }
 }
 
 module.exports = {
-  getMoviesAndTvSeries
-};
+  getMoviesAndTvSeries,
+  createMovie,
+  getMovies,
+  updateMovie,
+  deleteMovie,
+  createTvSeries,
+  getTvSeries,
+  updateTvSeries,
+  deleteTvSeries
+}
