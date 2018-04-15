@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const movie = require('./routes/movie');
 const users = require('./routes/users');
@@ -9,6 +10,7 @@ const app = express();
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/entertainme');
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

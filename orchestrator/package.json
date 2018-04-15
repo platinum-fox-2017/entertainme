@@ -1,5 +1,5 @@
 {
-  "name": "movies",
+  "name": "orchestrator",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -7,10 +7,11 @@
   },
   "dependencies": {
     "body-parser": "~1.18.2",
-    "cors": "^2.8.4",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.15.5",
-    "mongoose": "^5.0.14"
+    "mongoose": "^5.0.14",
+    "redis": "^2.8.0",
+    "axios": "^0.18.0"
   }
 }

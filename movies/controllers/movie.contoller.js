@@ -6,7 +6,7 @@ module.exports = {
             const readAllMovies = await Movie.find();
             res.status(200).json({
                 message: 'Success get all data',
-                movies: readAllMovies
+                data: readAllMovies
             })
         } catch (error) {
             res.send(error)
@@ -22,7 +22,8 @@ module.exports = {
                 tag: req.body.tag
             })
             res.status(200).json({
-                message: 'Success create new data'
+                message: 'Success create new data',
+                data: createMovie
             })
         } catch (error) {
             res.status(500).json({
