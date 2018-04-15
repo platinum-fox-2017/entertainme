@@ -1,55 +1,82 @@
 const MovieModel = require('../models/movie.model');
 
 module.exports = {
-    showMovie(req, res) {
-        MovieModel.find()
-            .then(data => {
-                res.status(200).json({
-                    message: "Success Show Data",
-                    data
-                })
+
+    showMovie: async (req, res) => {
+        try {
+            let fetchData = await MovieModel.find()
+            return res.status(200).json({
+                message: "Success Show Data",
+                fetchData
             })
+        } catch (error) {
+            return res.status(500).json({
+                message: "Can not find movies",
+                error
+            })
+        }
     },
-    addMovie(req, res) {
-        let item = {
-            title: req.body.title,
-            overview: req.body.overview,
-            poster_path: req.body.poster_path,
-            tag: req.body.tag,
-            status: req.body.status
+    addMovie: async (req, res) => {
+        try {
+            
+            let item = {
+                title: req.body.title,
+                overview: req.body.overview,
+                poster_path: req.body.poster_path,
+                tag: req.body.tag,
+                status: req.body.status
+            }
+
+            await MovieModel.create(item)
+
+            return res.status(201).json({
+                message: "Create Movie Success",
+            })
+        } catch (error) {
+            return res.status(500).json({
+                message: "Failed Insert Data",
+                error
+            })
         }
 
-        let data = new MovieModel(item)
-        data.save((err, data) => {
-            if (err) res.status(500).json({ message: "Failed Insert Data" })
-            res.status(201).json({
-                message: "Insert Success",
-                data
-            })
-        })
     },
-    updateMovie(req, res) {
-        MovieModel.findOneAndUpdate(req.params.id, req.body, function (err, data) {
-            if (err) return res.send(500, { error: err })
-            res.status(201).json({
-                message: "Update Success",
-                data
+    updateMovie: async (req, res) => {
+
+        try {
+            console.log(req.body)
+            console.log(req.params.id)
+            let updateData = await MovieModel.findByIdAndUpdate(
+                req.params.id,
+                req.body
+            )
+
+            return res.status(200).json({
+                message: "Update data success",
+                updateData
             })
-        })
+        } catch (error) {
+            return res.status(500).json({
+                message: "Update data failed",
+                error
+            })
+        }
+
     },
-    deleteMovie(req, res) {
-        MovieModel.remove({
-            _id: req.params.id
-        })
-        .then(data => {
-            res.status(200).json({
-                data
+    deleteMovie: async (req, res) => {
+
+        try {
+            let deleteData = await MovieModel.remove({
+                _id: req.params.id
             })
-        })
-        .catch(err => {
+            return res.status(200).json({
+                message: "Delete data movie success",
+                deleteData
+            })
+        } catch (error) {
             res.status(500).json({
-                message: "Failed Delete Data"
+                message: "Delete data movie failed"
             })
-        })
+        }
+
     } 
 }
