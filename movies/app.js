@@ -1,15 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const index = require('./routes/index');
+const movie = require('./routes/movie');
 const users = require('./routes/users');
 
 const app = express();
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/entertainme');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/', index);
+app.use('/', movie);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
