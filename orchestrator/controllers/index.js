@@ -12,7 +12,6 @@ module.exports = {
                 tvseries: tvseries.data.data
             }
             client.set('entertainme', JSON.stringify(result));
-            client.quit();
             res.status(200).json({
                 message: 'Get all data success',
                 data: result

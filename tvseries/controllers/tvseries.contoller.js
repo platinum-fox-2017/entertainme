@@ -12,6 +12,22 @@ module.exports = {
             res.send(error)
         }
     },
+    findById: async (req, res) => {
+        try {
+            const tvseries = await TvSeries.findById(req.params.id, function (err, data) {
+                if (err) return handleError(err);
+                res.status(200).json({
+                    message: 'Success to get data',
+                    data
+                })
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Internal server error',
+                error
+            })
+        }
+    },
     create: async (req, res) => {
         try {
             const createTvSeries = await TvSeries.create({
@@ -25,6 +41,38 @@ module.exports = {
                 message: 'Success create new data',
                 data: createTvSeries
             })
+        } catch (error) {
+            res.status(500).json({
+                message: 'Internal server error',
+                error
+            })
+        }
+    },
+    update: async (req, res) => {
+        try {
+            const updateTvSeries = await
+                TvSeries.update({ _id: req.params.id }, { $set: { ...req.body } }, function (err, data) {
+                    if (err) return res.status(500).json({ message: 'Internal server error' })
+                    res.status(200).json({
+                        message: 'Success to update data',
+                        data
+                    })
+                });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Internal server error',
+                error
+            })
+        }
+    },
+    remove: async (req, res) => {
+        try {
+            const deleteTvSeries = await TvSeries.remove({ _id: req.params.id }, function (err) {
+                if (err) return handleError(err);
+                res.status(200).json({
+                    message: 'Success to delete tvseries'
+                })
+            });
         } catch (error) {
             res.status(500).json({
                 message: 'Internal server error',
