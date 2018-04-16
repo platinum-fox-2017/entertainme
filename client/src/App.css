@@ -22,6 +22,14 @@
   font-size: large;
 }
 
+.container {
+  margin: 3rem 8rem
+}
+
+.poster {
+  width: 20%
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
