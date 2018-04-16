@@ -5,11 +5,26 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors')
+const fs = require('fs')
+const { merge } = require('lodash')
+
+// redis
 const redis = require('redis')
 const client = redis.createClient()
 
+// graphql
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
+const { makeExecutableSchema } = require('graphql-tools')
+const typeDefs = fs.readFileSync('./graphql/typeDefs/index.gql', 'utf-8')
+const movieResolvers = require('./graphql/resolvers/movies.resolvers.js')
+const showResolvers = require('./graphql/resolvers/shows.resolvers.js')
+const resolvers = merge(movieResolvers, showResolvers)
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers
+})
+
 const index = require('./routes/index');
-// const users = require('./routes/users');
 const dataEntertain = require('./routes/dataEntertain');
 
 const app = express();
@@ -30,14 +45,15 @@ app.set('view engine', '.');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors())
 app.use(logger('dev'));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-// app.use('/users', users);
 app.use('/entertain', dataEntertain)
+app.use('/graphql', bodyParser.json(), graphqlExpress({schema}))
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

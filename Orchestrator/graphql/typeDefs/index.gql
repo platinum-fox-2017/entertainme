@@ -1,0 +1,75 @@
+type Query {
+  movies: [Movie],
+  shows: [Show]
+}
+
+type Mutation {
+  addMovie(movie: MovieInput): Movie,
+  editMovie(movie: MovieEdit, id: String): Movie,
+  deleteMovie(id: String): Movie,
+  addShow(show: ShowInput): Show,
+  editShow(show: ShowEdit, id: String): Show,
+  deleteShow(id: String): Show,
+}
+
+type Delete {
+  message: String
+}
+
+# Movies
+input MovieInput {
+  poster_path: String
+  overview: String
+  title: String!
+  popularity: String
+  status: String
+  tag: [String]!
+}
+
+input MovieEdit {
+  poster_path: String
+  overview: String
+  title: String
+  popularity: String
+  status: String
+  tag: [String]
+}
+
+type Movie {
+  _id: String,
+  poster_path: String,
+  overview: String,
+  title: String!,
+  popularity: String,
+  status: String,
+  tag: [String]!
+}
+
+# Shows
+input ShowInput {
+  poster_path: String
+  overview: String
+  title: String!
+  popularity: String
+  status: String
+  tag: [String]!
+}
+
+input ShowEdit {
+  poster_path: String
+  overview: String
+  title: String
+  popularity: String
+  status: String
+  tag: [String]
+}
+
+type Show {
+  _id: String,
+  poster_path: String,
+  overview: String,
+  title: String!,
+  popularity: String,
+  status: String,
+  tag: [String]!
+}
