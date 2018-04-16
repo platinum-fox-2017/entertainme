@@ -38,8 +38,27 @@ const addTv = (req,res) => {
     })
 }
 
+const updateTV = (req,res) => {
+  Tv.findByIdAndUpdate(req.params.tvId,req.body, {new: true}, (err, tv) => {
+    if (err) return res.status(500).send(err);
+    return res.send(tv);
+  })
+}
+
+const deleteTV = (req,res) => {
+  Tv.findOneAndRemove({_id : req.params.tvId }, (err, tv) => {
+    if (err) return res.status(500).send(err);
+    const response = {
+        message: "tv successfully deleted"
+    }
+    return res.status(200).send(response);
+  })
+}
+
 
 module.exports = {
   getAllTv,
-  addTv
+  addTv,
+  updateTV,
+  deleteTV
 }

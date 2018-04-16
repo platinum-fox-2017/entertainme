@@ -40,8 +40,27 @@ const addMovies = (req,res) => {
     })
 }
 
+const updateMovie = (req,res) => {
+  Movie.findByIdAndUpdate(req.params.movieId,req.body, {new: true}, (err, movie) => {
+    if (err) return res.status(500).send(err);
+    return res.send(movie);
+  })
+}
+
+const deleteMovie = (req,res) => {
+  Movie.findOneAndRemove({_id : req.params.movieId }, (err, movie) => {
+    if (err) return res.status(500).send(err);
+    const response = {
+        message: "movie successfully deleted"
+    }
+    return res.status(200).send(response);
+  })
+}
+
 
 module.exports = {
   getAllMovies,
-  addMovies
+  addMovies,
+  updateMovie,
+  deleteMovie,
 }
