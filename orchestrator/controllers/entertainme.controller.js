@@ -35,7 +35,7 @@ module.exports ={
         poster_path: req.body.poster_path,
         popularity: req.body.popularity,
       }
-      let add = await axios.post('http://localhost:3001/movies')
+      let add = await axios.post('http://localhost:3001/movies', movie)
       
       res.status(200).json({
         message: 'movie added',

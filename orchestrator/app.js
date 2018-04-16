@@ -13,6 +13,9 @@ var entertainme = require('./routes/entertainme');
 
 var app = express();
 
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
+const schema = require('./graphql/index')
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -27,6 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/entertainme', entertainme);
+app.use('/graphql', bodyParser.json(), graphqlExpress({schema}))
+app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
