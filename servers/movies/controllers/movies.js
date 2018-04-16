@@ -23,7 +23,6 @@ const createMovie = async (req, res) => {
 
 const getMovies = async (req, res) => {
   try {
-    console.log('masuk movies/ getMovies')
     const movies = await Movies.find()
     res.status(200).json({
       info: 'Fetch Movies successfully',
