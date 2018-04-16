@@ -4,7 +4,10 @@ var app = express();
 const cors = require('cors')
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://agnynureza:12345@ds133856.mlab.com:33856/microservice')
+mongoose.connect('mongodb://agnynureza:12345@ds133856.mlab.com:33856/microservice', err => {
+  if(!err) console.log('Movies connected to database !')
+  else throw new error(err)
+})
 
 var index = require('./routes/movies');
 const tag = require('./routes/tag')

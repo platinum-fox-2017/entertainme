@@ -7,6 +7,8 @@ const entertainme = require('./routes/entertainme');
 const movie = require('./routes/movie');
 const tv = require('./routes/tv');
 
+const redis = require("redis");
+const client = redis.createClient();
 const cache = require('./middleware/redis');
 
 app.use(bodyParser.urlencoded({
@@ -14,6 +16,11 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cors());
+
+
+client.on("connect", () => {
+  console.log('orchestrator redis connected!');
+});
 
 app.use('/entertainme',cache,entertainme);
 app.use('/movie', movie);
