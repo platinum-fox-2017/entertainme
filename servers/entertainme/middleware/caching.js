@@ -7,7 +7,7 @@ client.on('connect', () => {
 
 const caching = (req, res, next) => {
   client.get('entertainme_data', (error, reply) => {
-    console.log('>> 00 middleware/ caching/')
+    console.log('>> 00 middleware/ caching/', reply)
     reply ? res.status(200).json(JSON.parse(reply)) : next()
   })
 }

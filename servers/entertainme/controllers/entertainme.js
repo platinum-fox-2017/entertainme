@@ -24,10 +24,8 @@ const getMoviesAndTvSeries = async(req, res) => {
     // })
 
     //With Redis
-    client.set('entertainme_data', JSON.stringify(result))
-    client.expire('Entertainme', 800)
+    client.set('entertainme_data', JSON.stringify(result), 'EX', 100)
     res.status(200).json(result)
-
   } catch (error) {
     res.status(500).json({
       message: error.message
@@ -47,15 +45,14 @@ const createMovie = async(req, res) => {
     })
 
     //Without Redis
-    res.status(201).json({
-      message: '1 new movie added successfully',
-      movie: addMovie.data
-    })
+    // res.status(201).json({
+    //   message: '1 new movie added successfully',
+    //   movie: addMovie.data
+    // })
 
     //With Redis
-    // client.set('Entertainme', JSON.stringify(addMovie.data))
-    // client.expire('Entertainme', 800)
-    // res.status(200).json(addMovie.data)
+    client.set('entertainme_data', JSON.stringify(addMovie.data), 'EX', 100)
+    res.status(200).json(addMovie.data)
   } catch (error) { 
     res.status(500).json({
       message: error.message
@@ -68,14 +65,13 @@ const getMovies = async(req, res) => {
     console.log('masuk entertainme/ getMovies')
     const movies = await axios.get(moviesUrl)
     //without Redis
-    res.status(200).json({
-      movies: movies.data
-    })
+    // res.status(200).json({
+    //   movies: movies.data
+    // })
 
     //With Redis
-    // client.set('Entertainme', JSON.stringify(movies.data))
-    // client.expire('Entertainme', 800)
-    // res.status(200).json(movies.data)
+    client.set('entertainme_data', JSON.stringify(movies.data), 'EX', 100)
+    res.status(200).json(movies.data)
   } catch (error) {
     res.status(500).json({
       message: error.message
@@ -157,14 +153,13 @@ const getTvSeries = async(req, res) => {
     const tvSeries = await axios.get(tvSeriesUrl)
     
     //without Redis
-    res.status(200).json({
-      tvSeries: tvSeries.data
-    })
+    // res.status(200).json({
+    //   tvSeries: tvSeries.data
+    // })
 
     //With redis
-    // client.set('entertainme_data', JSON.stringify(tvSeries.data))
-    // client.expire('Entertainme', 800)
-    // res.status(200).json(tvSeries.data)
+    client.set('entertainme_data', JSON.stringify(tvSeries.data), 'EX', 100)
+    res.status(200).json(tvSeries.data)
   } catch (error) {
     res.status(500).json({
       message: error.message

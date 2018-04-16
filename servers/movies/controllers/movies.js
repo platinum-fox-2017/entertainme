@@ -47,7 +47,7 @@ const updateMovie = async (req, res) => {
       status: req.body.status,
     })
     res.status(200).json({
-      info: 'Update Movie Success!',
+      info: 'Update Movie Success !',
       data: movieUpdated
     })
   } catch (error) {
