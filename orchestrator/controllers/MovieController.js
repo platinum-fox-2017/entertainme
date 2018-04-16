@@ -23,7 +23,7 @@ module.exports = {
           let existingCache = JSON.parse(reply)
           existingCache.movies.push(newMovie.data.data)
           client.set('entertainme', JSON.stringify(existingCache))
-          return res.status(200).json(newMovie.data)
+          return res.status(200).json(newMovie.data.data)
         })
       } else {
         res.status(202).json({

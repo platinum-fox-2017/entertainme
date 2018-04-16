@@ -1,0 +1,40 @@
+input MovieInput {
+  title: String,
+  overview: String,
+  poster_path: String,
+  popularity: Int,
+  status: String  
+}
+
+type Movie {
+  _id: String,
+  title: String,
+  overview: String,
+  poster_path: String,
+  popularity: Int,
+  status: String
+}
+
+type TvSeries {
+  _id: String,
+  title: String,
+  overview: String,
+  poster_path: String,
+  popularity: Int,
+  status: String
+}
+
+type Query {
+  getData: All
+}
+
+type All {
+  movies: [Movie],
+  tvseries: [TvSeries]
+}
+
+type Mutation {
+  createMovie(newMovie: MovieInput): Movie,
+  updateMovie(movieId: String!, updateMovie: MovieInput): Movie,
+  deleteMovie(movieId: String!): Movie
+}
