@@ -3,7 +3,6 @@ module.exports = {
   Query: {
     movies: async () => {
       try {
-        console.log('masuk')
         let movies = await axios.get('http://localhost:3001/movies')
         console.log(movies.data.movie[0])
         return movies.data.movie
