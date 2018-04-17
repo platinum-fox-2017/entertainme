@@ -11,24 +11,26 @@ import { Query, Mutation } from 'react-apollo'
 import { movieQuery, entertainMe } from '../query/index.js'
 import { addTestShow } from '../mutation/index.js'
 
-class Main extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      title: '',
-      overview: '',
-      poster_path: '',
-      popularity: '',
-      status: '',
-      tag: []
-    }
-  }
+import Header from '../components/Header.js'
 
-  onInput = (text, field) => {
-    this.setState({
-      [field]: text
-    })
-  }
+class Main extends React.Component {
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     title: '',
+  //     overview: '',
+  //     poster_path: '',
+  //     popularity: '',
+  //     status: '',
+  //     tag: []
+  //   }
+  // }
+
+  // onInput = (text, field) => {
+  //   this.setState({
+  //     [field]: text
+  //   })
+  // }
 
   _keyExtractor = (item, index) => `movie-${index}`
 
@@ -40,45 +42,8 @@ class Main extends React.Component {
   )
 
   _renderHeader = () => {
-    let movieData = {
-      poster_path: "some fake link here",
-      overview: "this move has been brought to you by code magic",
-      title: "flowing throught tubes",
-      popularity: "-123",
-      status: "ok",
-      tag: ["this is a movie"]
-    }
     return (
-      <View style={ styles.container }>
-        <Text>movies</Text>
-        <TextInput
-          style={ styles.input }
-          value={this.state.query}
-          placeholder="title"
-          onChangeText={(text) => this.onInput(text, 'title')}
-        />
-        <Mutation
-          mutation={ addTestShow }
-          update={(cache, {data: {addMovie} }) => {
-            // cache will get data of specific query from cache
-            const { movies } = cache.readQuery({ query: movieQuery })
-            // new data from mutation will be added to cache
-            cache.writeQuery({
-              query: movieQuery,
-              data: { movies: movies.concat([addMovie])}
-            })
-          }}
-        >
-          {(addMovie, { data }) => (
-            <TouchableOpacity
-              style={ styles.button }
-              onPress={ () => addMovie({variables: {input: movieData}}) }
-            >
-              <Text>Add Test Movies{ movieData.title }</Text>
-            </TouchableOpacity>
-          )}
-        </Mutation>
-      </View>
+      <Header />
     )
   }
 
@@ -114,6 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    paddingBottom: 10,
   },
   movie: {
     flex: 1,
