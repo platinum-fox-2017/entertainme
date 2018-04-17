@@ -19,10 +19,10 @@ type Tvseries {
 }
 
 type Main {
-  movies: [movie]
-  series: [tv-series]
+  movies: [Movie]
+  series: [Tvseries]
 }
 
 type Query {
-  fetchAll: main
+  fetchAll: Main
 }
