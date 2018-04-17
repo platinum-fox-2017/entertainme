@@ -8,7 +8,11 @@ const cors = require('cors');
 const port = process.env.PORT || 3002;
 const client = require('redis').createClient();
 
-mongoose.connect(`mongodb://admin:admin@ds143039.mlab.com:43039/entertainme`, err => {
+// mongoose.connect(`mongodb://admin:admin@ds143039.mlab.com:43039/entertainme`, err => {
+//   err ? console.log('error: ', err) : console.log('connect db');
+// });
+
+mongoose.connect(`mongodb://localhost/entertainme`, err => {
   err ? console.log('error: ', err) : console.log('connect db');
 });
 

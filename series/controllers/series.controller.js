@@ -12,7 +12,10 @@ module.exports = {
         client.set('series', JSON.stringify(newCache));
       }
       
-      return res.status(201).send({ info: 'series add successfully' });
+      return res.status(201).send({
+        info: 'series add successfully',
+        data: series
+      });
     } catch (err) {
       return res.status(500).send({ info: err.message });
     }

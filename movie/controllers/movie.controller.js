@@ -12,7 +12,10 @@ module.exports = {
         client.set('movies', JSON.stringify(newCache));
       }
       
-      return res.status(201).send({ info: 'movie add successfully' });
+      return res.status(201).send({
+        info: 'movie add successfully',
+        data: movie
+      });
     } catch (err) {
       return res.status(500).send({ info: err.message });
     }
