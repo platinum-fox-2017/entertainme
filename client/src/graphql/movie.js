@@ -1,13 +1,12 @@
 import gql from "graphql-tag";
 
-export const movieGQL = gql`
+export let movieGQL = gql`
     {
         movie {
-            title,
+            title
             poster_path
             tag
-            status
-            overview
         }
     }
-`;
+
+`
