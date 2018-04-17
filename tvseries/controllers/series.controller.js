@@ -4,7 +4,8 @@ module.exports = {
   addSeries: function (req, res) {
     const series = new Series()
     series.title = req.body.title
-    series.overview = req.body.poster_path
+    series.overview = req.body.overview
+    series.poster_path = req.body.poster_path
     series.popularity = req.body.popularity
     series.tag = req.body.tag
     series.status = req.body.status

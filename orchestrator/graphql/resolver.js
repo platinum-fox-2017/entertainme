@@ -17,6 +17,7 @@ const resolver = {
   Mutation: {
     addMovie: async(_,{ movie }) => {
       console.log(movie);
+      const movies = await axios.post('http://localhost:3000/movies', movie)
       return movie
     }
   }

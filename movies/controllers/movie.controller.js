@@ -4,7 +4,8 @@ module.exports = {
   addMovie: function (req, res) {
     const movie = new Movie()
     movie.title = req.body.title
-    movie.overview = req.body.poster_path
+    movie.overview = req.body.overview
+    movie.poster_path = req.body.poster_path
     movie.popularity = req.body.popularity
     movie.tag = req.body.tag
     movie.status = req.body.status
