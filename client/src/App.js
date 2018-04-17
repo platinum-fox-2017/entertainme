@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import MovieComponent from './components/movie';
 import TVSeriesComponent from './components/tvseries';
+import AddMovie from './components/addMovie';
 
 class App extends Component {    
   render() {
@@ -14,8 +15,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div className="App-intro">
-          {/* <MovieComponent /> */}
-          <TVSeriesComponent />
+          <MovieComponent />
+          {/* <TVSeriesComponent /> */}
+          <AddMovie />
         </div>
       </div>
     );

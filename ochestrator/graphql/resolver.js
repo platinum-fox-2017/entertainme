@@ -21,6 +21,7 @@ const resolvers = {
     },
     Mutation: {
         addMovie: async (_, { movie }) => {
+            console.log(movie, 'ini movie')
             try {
                 await axios.post('http://localhost:3001/api/movies', movie)
                 return movie
