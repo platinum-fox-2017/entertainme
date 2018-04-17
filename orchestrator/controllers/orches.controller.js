@@ -133,5 +133,11 @@ async function deleteSeries (req, res) {
 }
 
 module.exports = {
-  showData
+  showData,
+  addMovie,
+  addSeries,
+  editMovie,
+  editSeries,
+  deleteMovie,
+  deleteSeries
 };
