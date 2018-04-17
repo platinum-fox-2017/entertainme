@@ -1,8 +1,15 @@
 # entertainme
 
+# Client
+
+Runs on react-native, run `npm start` to start packager and `npm run android`
+to connect device. To give access to localhost run `adb reverse tcp:3000 tcp:3000`.
+
+The client shows movies list and a simple command to add execute a mutation with graphql.
+
 # Rest API
 
-Orchestrator Apis:
+Orchestrator (PORT 3000) Apis:
 
 | Route           | HTTP    | Descriptions                    |
 | :-------------  | :------ | :------------------------------ |
@@ -16,7 +23,7 @@ Orchestrator Apis:
 
 Micro services API:
 
-1) Movies
+1) Movies (PORT 3001)
 
 | Route           | HTTP    | Descriptions                    |
 | :-------------  | :------ | :------------------------------ |
@@ -25,7 +32,7 @@ Micro services API:
 | `/movies/update/:id`| PUT     | Update movies data         |
 | `/movies/delete/:id`| DELETE  | Delete a movies data       |
 
-2) Shows
+2) Shows (PORT 3002)
 
 | Route           | HTTP    | Descriptions                    |
 | :-------------  | :------ | :------------------------------ |
