@@ -5,6 +5,7 @@ const { makeExecutableSchema } = require('graphql-tools');
 const fs = require('fs')
 const typeDefs = fs.readFileSync('./graphql/schema.gql', 'utf-8')
 const resolvers = require('./graphql/resolvers')
+const cors = require('cors');
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -15,7 +16,7 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
