@@ -1,0 +1,28 @@
+type Movie {
+  _id: String
+  title: String
+  overview: String
+  poster_path: String
+  popularity: Int
+  tag: String
+  status: Int
+}
+
+type Tvseries {
+  _id: String
+  title: String
+  overview: String
+  poster_path: String
+  popularity: Int
+  tag: String
+  status: Int
+}
+
+type Main {
+  movies: [Movie]
+  series: [Tvseries]
+}
+
+type Query {
+  fetchAll: Main
+}
